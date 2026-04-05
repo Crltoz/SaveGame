@@ -1,0 +1,211 @@
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Inter:wght@300;400;700;800&display=swap');
+
+// 1. Bourne Bourne Variables
+$primary: #00f2ff;       // Cyan Táctico
+$secondary: #ff8c00;     // Naranja de Alerta
+$dark: #050508;
+$info-blue: #102a43;    // Deep Intel Blue
+$body-bg: #030303;
+$body-color: #f1f1f1;
+$font-family-sans-serif: 'Inter', sans-serif;
+$font-mono: 'Share Tech Mono', monospace;
+$headings-font-family: 'Inter', sans-serif;
+
+$navbar-dark-color: rgba($primary, 0.6);
+$navbar-dark-hover-color: $primary;
+$navbar-dark-active-color: $primary;
+
+$card-bg: #0a0a0c;
+$card-border-color: rgba($primary, 0.15);
+
+// 2. Bootstrap Core
+@import "bootstrap/scss/bootstrap";
+@import "bootstrap-icons/font/bootstrap-icons.css";
+
+// 3. Technical Global Styles
+body {
+  background-color: $body-bg;
+  color: $body-color;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+
+  // Layer 1: Minimalist Digital Noise (Base64 SVG) with animation
+  &::before {
+    content: "";
+    position: fixed;
+    inset: -100px; // Overscan for animation
+    pointer-events: none;
+    z-index: -1;
+    opacity: 0.22; // Increased from 0.12
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    animation: noise-flicker 0.2s steps(4) infinite;
+  }
+
+  // Layer 2: Tactical Dot Grid (Minimalist)
+  &::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: -2;
+    opacity: 0.35; // Increased from 0.2
+    background-image: radial-gradient(rgba($primary, 0.4) 1px, transparent 1px);
+    background-size: 35px 35px;
+    animation: grid-drift 120s linear infinite;
+  }
+}
+
+// Layer 3: HUD Vignette (Stronger)
+.app-container {
+  background: radial-gradient(circle at center, transparent 30%, rgba($dark, 0.95) 150%);
+  min-height: 100vh;
+}
+
+@keyframes noise-flicker {
+  0% { transform: translate(0, 0); }
+  25% { transform: translate(10px, -5px); }
+  50% { transform: translate(-10px, 10px); }
+  75% { transform: translate(5px, -10px); }
+  100% { transform: translate(0, 0); }
+}
+
+@keyframes grid-drift {
+  from { background-position: 0 0; }
+  to { background-position: -400px 400px; }
+}
+
+.scanner-line {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 1px;
+  background: linear-gradient(to right, transparent, rgba($primary, 0.15), transparent);
+  box-shadow: 0 0 8px rgba($primary, 0.2);
+  z-index: 2000;
+  pointer-events: none;
+  animation: scan-move 15s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes scan-move {
+  0% { top: -5%; opacity: 0; }
+  10% { opacity: 0.8; }
+  90% { opacity: 0.8; }
+  100% { top: 105%; opacity: 0; }
+}
+
+.hud-glitch {
+  &:hover {
+    animation: glitch-text 0.3s ease-in-out infinite;
+  }
+}
+
+@keyframes glitch-text {
+  0% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); text-shadow: 1px 0 $secondary; }
+  40% { transform: translate(-2px, -2px); text-shadow: -1px 0 $primary; }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+  100% { transform: translate(0); }
+}
+
+h1, h2, h3, h4, .bourne-title {
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+}
+
+.mono {
+  font-family: $font-mono;
+}
+
+.tactical-border {
+  border: 1px solid rgba($primary, 0.15);
+  position: relative;
+  &::before {
+    content: '';
+    position: absolute;
+    top: -1px; left: -1px;
+    width: 6px; height: 6px;
+    border-top: 1px solid $primary;
+    border-left: 1px solid $primary;
+  }
+}
+
+.card-dossier {
+  background: $card-bg;
+  border: 1px solid rgba($primary, 0.05);
+  transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+  border-radius: 0;
+
+  &:hover {
+    border-color: rgba($primary, 0.3);
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+    transform: translateY(-4px);
+    .card-img-wrap::after {
+      opacity: 0.1;
+    }
+  }
+}
+
+.card-img-wrap {
+  position: relative;
+  overflow: hidden;
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle, transparent 20%, rgba($dark, 0.8) 150%);
+    opacity: 0.5;
+    transition: opacity 0.3s;
+  }
+}
+
+.status-tag {
+  font-family: $font-mono;
+  font-size: 0.7rem;
+  padding: 2px 6px;
+  background: rgba($primary, 0.1);
+  color: $primary;
+  border-left: 2px solid $primary;
+}
+
+.navbar {
+  border-bottom: 1px solid rgba($primary, 0.15);
+  background: rgba($dark, 0.95) !important;
+  backdrop-filter: blur(10px);
+}
+
+.nav-link {
+  font-family: $font-mono;
+  font-size: 0.85rem;
+  letter-spacing: 2px;
+  padding: 0.5rem 1rem !important;
+}
+
+// Animations
+@keyframes scanline {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+
+.scanline-effect {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 5px;
+  background: rgba($primary, 0.05);
+  box-shadow: 0 0 10px rgba($primary, 0.2);
+  z-index: 10000;
+  pointer-events: none;
+  animation: scanline 8s linear infinite;
+}
+
+.blur-reveal {
+  filter: blur(10px);
+  animation: reveal 1s forwards;
+}
+
+@keyframes reveal {
+  to { filter: blur(0); }
+}
