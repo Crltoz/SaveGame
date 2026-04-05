@@ -3,7 +3,7 @@ import { RouterView } from 'vue-router'
 import Navbar from './components/Navbar.vue'
 import DisclaimerModal from './components/DisclaimerModal.vue'
 import { useSound } from './composables/useSound'
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 
 const { isMuted, toggleMute, playClick } = useSound()
 
